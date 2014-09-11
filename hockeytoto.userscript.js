@@ -1,8 +1,8 @@
 // filter for results of one team on hockeytoto.ch
-// version 1.2
+// version 2.0
 
-// 27.09.2011
-// Copyright (c) 2011, Stefan Oderbolz
+// 11.09.2014
+// Copyright (c) 2014, Stefan Oderbolz
 // Released under the GPL license
 // http://www.gnu.org/copyleft/gpl.html
 //
@@ -22,12 +22,12 @@
 //
 // ==UserScript==
 // @name          Filter Team (Hockeytoto.ch)
-// @namespace     http://www.readmore.ch
+// @namespace     http://www.metaodi.ch
 // @description   filter for one team on hockeytoto.ch
-// @include       http://*.hockeytoto.ch/home/*
+// @include       http://*.hockeytoto.ch/onhockey201415/*
 // ==/UserScript==
 
-var START_ROW = 7;
+var START_ROW = 6;
 var HOME_TEAM_COL = 4;
 var GUEST_TEAM_COL = 6;
 var RESULT_COL = 7;
@@ -36,10 +36,10 @@ function filterTeam()
 {
 	resetFilter();
 	
-  filter_team = document.getElementById('filter_team').value;
+    filter_team = document.getElementById('filter_team').value;
 	var filter_regex = new RegExp('.*' + filter_team + '.*');
 	
-	var resultTable = document.getElementById('Form1').getElementsByTagName('table')[0];
+	var resultTable = document.getElementsByTagName('form')[0].getElementsByTagName('table')[0];
 	for(var rowNr = START_ROW; rowNr < resultTable.rows.length; rowNr++)
 	{
 		var match_row = resultTable.rows[rowNr].cells;
@@ -76,7 +76,7 @@ function filterTeam()
 
 function resetFilter()
 {
-	var resultTable = document.getElementById('Form1').getElementsByTagName('table')[0];
+	var resultTable = document.getElementsByTagName('form')[0].getElementsByTagName('table')[0];
 	for(var rowNr = START_ROW; rowNr < resultTable.rows.length; rowNr++)
 	{
 		resultTable.rows[rowNr].style.display = '';
@@ -91,7 +91,7 @@ function trim(str)
 function getTeams() {
 	var team_array = new Array();
 	team_array[0] = new Object();
-	var resultTable = document.getElementById('Form1').getElementsByTagName('table')[0];
+	var resultTable = document.getElementsByTagName('form')[0].getElementsByTagName('table')[0];
 	for(var rowNr = START_ROW; rowNr < resultTable.rows.length; rowNr++)
 	{
 		var match_row = resultTable.rows[rowNr].cells;
@@ -112,7 +112,7 @@ function getTeams() {
 
 //get "Qualifikation" cell
 var quali_cell = null;
-var match_table = document.getElementById('Form1').getElementsByTagName('table')[0];
+var match_table = document.getElementsByTagName('form')[0].getElementsByTagName('table')[0];
 
 for (var i=0; i < match_table.getElementsByTagName('tr').length; i++)
 {
@@ -126,7 +126,7 @@ for (var i=0; i < match_table.getElementsByTagName('tr').length; i++)
 if (quali_cell != null)
 {
 	//use the Qualifikation cell as hook: the filter is added 1 row below
-	var container_hook = document.getElementById('Form1').getElementsByTagName('table')[0].getElementsByTagName('tr')[quali_cell+1].getElementsByTagName('td')[1];
+	var container_hook = document.getElementsByTagName('form')[0].getElementsByTagName('table')[0].getElementsByTagName('tr')[quali_cell+2].getElementsByTagName('td')[1];
 	var container = document.createElement('div');
 	container.innerHTML = '<b>Team w&auml;hlen für Filter:&nbsp;&nbsp;</b>';
 	
